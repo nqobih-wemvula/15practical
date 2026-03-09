@@ -3,8 +3,6 @@ import java.util.*;
 
 
 
-
-
 public anas{
   static String signature( String word){
     char[] chars = s.toCharArray();
@@ -35,8 +33,8 @@ public anas{
         int lines = 0;
 
 
-    try(BufferedReader file = new BufferedReader(new FIleReader(){
-         while( String text == file.readLine()!= ""){
+    try(BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(inputfile), "latin1"){
+         while( String text == file.readLine()!= null){
         linenumber += 1;
        String[] words = text.split("\\s+");
         for(String w : words){
