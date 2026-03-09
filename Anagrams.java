@@ -11,7 +11,7 @@ public anas{
     Arrays.sort(chars);
     return String(chars);
   }
-  static int System(String command){
+  static int runsystemCommand(String command){
     System.out.println("-"*50 + ">", command);
       try {
             Process process = Runtime.getRuntime().exec(command);
@@ -46,21 +46,47 @@ public anas{
                     }
                 }
                 lines++;
+      }
+    }
+      Map<String, List<String>> A = new HashMap<>();
+        for( String w : D.keySet()){
+          String a = signature(w);
+         A.computeIfAbsent(a, k -> new ArrayList<>().add(w));
+          }
+          try (BufferedWriter pw = new BufferedWriter(new FileWriter("anagrams"))) {
+            for (String key : A.keySet()) {
+                List<String> words = A.get(key);
+                if (words.size() > 1) {
+                    String anagramlist = String.join(" ", words);
+                    pw.println(anagramlist + "\\\\");
+                    for (int repeat = 0; repeat < words.size() - 1; repeat++) {
+                        int space = anagramlist.indexOf(' ');
+                        anagramlist = anagramlist.substring(space + 1) + " " + anagramlist.substring(0, space);
+                        pw.println(anagramlist + "\\\\");
+                    }
+                }
+            }
+        }
+runSystemCommand("sort anagrams > anagrams.sorted");
+List <Strng> aa = Files.redAllLines(Path.get("anagrams.sorted"));
+
+    try (PrintWriter tex = new PrintWriter(new FileWriter("latex/theAnagrams.tex"))) {
+            char letter = 'X';
+            for (String lemma : aa) {
+                char initial = lemma.charAt(0);
+                if (Character.toLowerCase(initial) != Character.toLowerCase(letter)) {
+                    letter = initial;
+                    tex.printf("%n\\vspace{14pt}%n\\noindent\\textbf{\\Large %s}\\\\*[+12pt]%n", Character.toUpperCase(initial));
+                }
+                tex.println(lemma);
+            }
+        }
+
+        runSystemCommand("rm anagrams anagrams.sorted");
+    }
+}
 
       
-      }
-        file.close();
-        String[] A = { }
-        for(w : D){
-          String a = signature(w);
-          if( a != A){
-            A[a] = [w];
-          }
-            else{
-              A[a].append(w);
-            }
-          }
-        
     }
         
     catch(IOException e){
